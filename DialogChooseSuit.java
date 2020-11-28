@@ -15,7 +15,6 @@ public class DialogChooseSuit extends JDialog {
   private JButton jButtonClubs = new JButton();
   private JButton jButtonAbort = new JButton();
   private JLabel jLabel1 = new JLabel();
-  // Ende Attribute
 
   public DialogChooseSuit() {
     // Dialog-Initialisierung
@@ -72,6 +71,7 @@ public class DialogChooseSuit extends JDialog {
     
     jButtonAbort.setBounds(20, 600, 75, 25);
     jButtonAbort.setText("Cancel");
+    jButtonAbort.setBackground(Color.RED);
     jButtonAbort.setMargin(new Insets(2, 2, 2, 2));
     jButtonAbort.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
@@ -86,34 +86,33 @@ public class DialogChooseSuit extends JDialog {
 
     setResizable(false);
     setVisible(true);
-  } // end of public DialogChooseColour
+  } 
 
   // Anfang Methoden
   public void jButtonSpades_ActionPerformed(ActionEvent evt) {
-    // TODO hier Quelltext einf�gen
-
-  } // end of jButtonSpades_ActionPerformed
+    new DialogChooseCard(0);
+    dispose();
+  }
 
   public void jButtonHearts_ActionPerformed(ActionEvent evt) {
-    // TODO hier Quelltext einf�gen
-
-  } // end of jButtonHearts_ActionPerformed
+    new DialogChooseCard(1);
+    dispose();
+  } 
 
   public void jButtonDiamonds_ActionPerformed(ActionEvent evt) {
-    // TODO hier Quelltext einf�gen
-
-  } // end of jButtonDiamonds_ActionPerformed
+    new DialogChooseCard(2);
+    dispose();
+  } 
 
   public void jButtonClubs_ActionPerformed(ActionEvent evt) {
-    // TODO hier Quelltext einf�gen
+    new DialogChooseCard(3);
+    dispose();
 
-  } // end of jButtonClubs_ActionPerformed
+  } 
 
   public void jButtonAbort_ActionPerformed(ActionEvent evt) {
     dispose();
-  } // end of jButtonAbort_ActionPerformed
-
-  // Ende Methoden
+  } 
   
 } // end of class DialogChooseColour
 
