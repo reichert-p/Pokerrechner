@@ -1,7 +1,7 @@
 import java.awt.*;
-import java.awt.event.*;
+//import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
+//import javax.swing.event.*;
 
 /**
  *
@@ -12,6 +12,10 @@ import javax.swing.event.*;
  */
 
 public class Mainpage extends JFrame {
+  /**
+   *
+   */
+  private static final long serialVersionUID = -4531847550809231890L;
   // Anfang Attribute
   private JLabel jLabel1 = new JLabel();
   private JLabel jLabel2 = new JLabel();
