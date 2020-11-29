@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
+//import javax.swing.event.*;
 
 public class DialogChooseCard extends JDialog {
   /**
@@ -10,11 +10,12 @@ public class DialogChooseCard extends JDialog {
   private static final long serialVersionUID = 3682779290740418865L;
   // Anfang Attribute
   private String[] suits = {"Spades","Hearts","Diamonds","Clubs"};
-  private String[] values = {"1","2","3","4","5","6","7","8","9","10","Lad","Queen","King","Ace"};
+  private String[] values = {"2","3","4","5","6","7","8","9","10","Lad","Queen","King","Ace"};
 
   private JLabel jLabelSuit = new JLabel();
   private JLabel jLabelValue = new JLabel();
-  private JButton jButtonPreview = new JButton();
+  private JLabel jLabelImageBox = new JLabel();
+  
   
   private JComboBox<String> jComboBoxSuit = new JComboBox<String>(suits);
   private DefaultComboBoxModel<String> jComboBoxSuitModel = new DefaultComboBoxModel<String>(suits);
@@ -46,26 +47,32 @@ public class DialogChooseCard extends JDialog {
     jLabelSuit.setBounds(54, 51, 134, 44);
     jLabelSuit.setText("Choose Suit");
     cp.add(jLabelSuit);
+    jLabelValue.setBounds(50, 131, 142, 36);
+    jLabelValue.setText("Choose Value");
+    cp.add(jLabelValue);
+
+    jLabelImageBox.setBounds(125, 210, 400, 400);
+    cp.add(jLabelImageBox);
+
     jComboBoxSuit.setModel(jComboBoxSuitModel);
     jComboBoxSuit.setBounds(282, 53, 174, 36);
     jComboBoxSuit.setSelectedIndex(Suit);
     jComboBoxSuit.setEditable(false);
+    jComboBoxSuit.addActionListener(new ActionListener() { 
+      public void actionPerformed(ActionEvent evt) { 
+       showCurrentCard();
+      }     
+    });
+
     cp.add(jComboBoxSuit);
-    jLabelValue.setBounds(50, 131, 142, 36);
-    jLabelValue.setText("Choose Value");
-    cp.add(jLabelValue);
     jComboBoxValue.setModel(jComboBoxValueModel);
     jComboBoxValue.setBounds(277, 130, 190, 36);
-    cp.add(jComboBoxValue);
-    jButtonPreview.setBounds(214, 233, 110, 20);
-    jButtonPreview.setText("See Preview");
-    jButtonPreview.setMargin(new Insets(2, 2, 2, 2));
-    jButtonPreview.addActionListener(new ActionListener() { 
+    jComboBoxValue.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
-        jButtonPrewiew_ActionPerformed(evt);
-      }
+       showCurrentCard();
+      }     
     });
-    cp.add(jButtonPreview);
+    cp.add(jComboBoxValue);
 
     jButton1.setBounds(10, 663, 483, 33);
     jButton1.setText("Back");
@@ -98,7 +105,7 @@ public class DialogChooseCard extends JDialog {
     });
     cp.add(jButton3);
     // Ende Komponenten
-    
+    this.showCurrentCard();
     setResizable(false);
     setVisible(true);
   } // end of public DialogChooseCard
@@ -120,10 +127,53 @@ public class DialogChooseCard extends JDialog {
     
   } // end of jButton3_ActionPerformed
 
-  public void jButtonPrewiew_ActionPerformed(ActionEvent evt){
-
-
+  public void showCurrentCard(){
+    
+    
+    ImageIcon cardPreviewe = new ImageIcon(this.getCard());
+    jLabelImageBox.setIcon(cardPreviewe);
   }
+
+  public String getCard(){
+    String suit = (String) jComboBoxSuit.getSelectedItem();
+      switch(suit){
+        case "Spades":
+            suit = "S";
+            break;
+        case "Hearts":
+            suit = "H";
+            break;
+        case "Diamonds":
+            suit = "D";
+            break;
+        case "Clubs":
+            suit = "C";
+            break;
+      } 
+    String item = (String) jComboBoxValue.getSelectedItem();
+      switch(item){
+        case "Lad":
+            item = "J";
+            break;
+        case "Queen":
+            item = "Q";
+            break;
+        case "King":
+            item = "K";
+            break;
+        case "Acs":
+            item = "A";
+            break;
+        default:
+            break;      
+      } 
+      String ausgabe = "Karten\\";
+      ausgabe += item;
+      ausgabe += suit;
+      ausgabe += ".png";
+      return ausgabe;
+
+    }
 
   // Ende Methoden
   
