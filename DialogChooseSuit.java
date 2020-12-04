@@ -9,6 +9,10 @@ public class DialogChooseSuit extends JDialog {
    */
   private static final long serialVersionUID = -268066263033937832L;
   // Anfang Attribute
+
+  private Mainpage parent;
+  private int stack;
+  private DialogChooseCard dialog;
   private JButton jButtonSpades = new JButton();
   private JButton jButtonHearts = new JButton();
   private JButton jButtonDiamonds = new JButton();
@@ -16,9 +20,11 @@ public class DialogChooseSuit extends JDialog {
   private JButton jButtonAbort = new JButton();
   private JLabel jLabel1 = new JLabel();
 
-  public DialogChooseSuit() {
+  public DialogChooseSuit(Mainpage parent, int stack) {
     // Dialog-Initialisierung
     super();
+    this.stack = stack;
+    this.parent = parent;
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     int frameWidth = 500;
     int frameHeight = 700;
@@ -90,25 +96,34 @@ public class DialogChooseSuit extends JDialog {
 
   // Anfang Methoden
   public void jButtonSpades_ActionPerformed(ActionEvent evt) {
-    new DialogChooseCard(0);
+    dialog = new DialogChooseCard(0,parent,stack);
     dispose();
   }
 
   public void jButtonHearts_ActionPerformed(ActionEvent evt) {
-    new DialogChooseCard(1);
+    dialog = new DialogChooseCard(1,parent,stack);
     dispose();
   } 
 
   public void jButtonDiamonds_ActionPerformed(ActionEvent evt) {
-    new DialogChooseCard(2);
+    dialog = new DialogChooseCard(2,parent,stack);
     dispose();
   } 
 
   public void jButtonClubs_ActionPerformed(ActionEvent evt) {
-    new DialogChooseCard(3);
+    dialog =  new DialogChooseCard(3,parent,stack);
     dispose();
 
   } 
+
+  public String returnCard(){
+    while(dialog == null){}
+    while(true){
+      if(dialog.returnCard() != null){
+        return dialog.returnCard();
+      }
+    }
+  }
 
   public void jButtonAbort_ActionPerformed(ActionEvent evt) {
     dispose();

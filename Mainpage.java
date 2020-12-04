@@ -17,12 +17,15 @@ public class Mainpage extends JFrame {
    */
   private static final long serialVersionUID = -4531847550809231890L;
   // Anfang Attribute
-  private ImageIcon cardPreview = new ImageIcon("Karten\\3C.png");
-
+  private ImageIcon cardPreview;
+  private String currentString;
+ 
   private JLabel jLabel1 = new JLabel();
   private JLabel jLabel2 = new JLabel();
   private JLabel jLabel3 = new JLabel();
-  private JButton jButton4 = new JButton();
+  private JButton jButtonNewLeft = new JButton();
+  private JButton jButtonNewMiddle = new JButton();
+  private JButton jButtonNewRight = new JButton();
  
   private JSeparator jSeparator0 = new JSeparator(SwingConstants.HORIZONTAL);
   private JSeparator jSeparatorTop = new JSeparator(SwingConstants.HORIZONTAL);
@@ -34,6 +37,9 @@ public class Mainpage extends JFrame {
   public Mainpage() { 
     // Frame-Initialisierung
     super();
+
+    cardPreview = this.scale("Karten\\New Card.png");
+
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                                                                   
     Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
@@ -59,19 +65,38 @@ public class Mainpage extends JFrame {
     jLabel3.setText("Cards Out");
     jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
     cp.add(jLabel3);
-    jButton4.setBounds(302, 227, 262, 400);
-    jButton4.setIcon(cardPreview);
-    jButton4.setBorderPainted( false );
-    //jButton4.setBackground(Color.white);
-    jButton4.setContentAreaFilled( false );
-    jButton4.addActionListener(new ActionListener() {
+    jButtonNewLeft.setBounds(20, 227, 262, 400);
+    jButtonNewLeft.setIcon(cardPreview);
+    jButtonNewLeft.setBorderPainted( false );
+    jButtonNewLeft.setContentAreaFilled( false );
+    jButtonNewLeft.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
-        jButton4.setIcon(scale(cardPreview));
+        getCard(0);
       }
     });
+    cp.add(jButtonNewLeft);
 
-  
-    cp.add(jButton4);
+    jButtonNewMiddle.setBounds(d.width / 3 + 20, 227, 262, 400);
+    jButtonNewMiddle.setIcon(cardPreview);
+    jButtonNewMiddle.setBorderPainted( false );
+    jButtonNewMiddle.setContentAreaFilled( false );
+    jButtonNewMiddle.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        getCard(1);
+      }
+    });
+    cp.add(jButtonNewMiddle);
+
+    jButtonNewRight.setBounds(2 * d.width / 3 + 20, 227, 262, 400);
+    jButtonNewRight.setIcon(cardPreview);
+    jButtonNewRight.setBorderPainted( false );
+    jButtonNewRight.setContentAreaFilled( false );
+    jButtonNewRight.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        getCard(2);
+      }
+    });
+    cp.add(jButtonNewRight);
     
     jSeparator0.setBounds(0, 200, d.width, 1);
     cp.add(jSeparator0);
@@ -89,11 +114,30 @@ public class Mainpage extends JFrame {
   } // end of public Mainpage
   
   // Anfang Methoden
-public ImageIcon scale(ImageIcon imageIcon){
-  Image image = imageIcon.getImage(); // transform it 
-  Image newimg = image.getScaledInstance(65, 100,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+public ImageIcon scale(String imageLink){
+  ImageIcon i = new ImageIcon(imageLink);
+  Image image = i.getImage(); // transform it 
+  Image newimg = image.getScaledInstance(156, 240,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
   return  new ImageIcon(newimg);  // transform it back
+}
 
+public void getCard(int i){
+  new DialogChooseSuit(this,i);
+}
+
+public void setCurrentString(String s,int stack){
+  currentString = s;
+  switch(stack){
+    case 0:
+        jButtonNewLeft.setIcon(scale(currentString));
+        break;
+    case 1:
+        jButtonNewMiddle.setIcon(scale(currentString));
+        break;
+    case 2:
+        jButtonNewRight.setIcon(scale(currentString));
+        break;
+    } 
 }
   
   // Ende Methoden

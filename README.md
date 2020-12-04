@@ -1,2 +1,2 @@
 # Pokerrechner hey oder
-                    <!-- ne ne -->
+                    implement feature: discard card

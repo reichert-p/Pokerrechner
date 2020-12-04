@@ -9,6 +9,10 @@ public class DialogChooseCard extends JDialog {
    */
   private static final long serialVersionUID = 3682779290740418865L;
   // Anfang Attribute
+  private Mainpage parent;
+  private String currentCard;
+  private int stack;
+
   private String[] suits = {"Spades","Hearts","Diamonds","Clubs"};
   private String[] values = {"2","3","4","5","6","7","8","9","10","Lad","Queen","King","Ace"};
 
@@ -28,9 +32,11 @@ public class DialogChooseCard extends JDialog {
   private JButton jButton3 = new JButton();
   // Ende Attribute
   
-  public DialogChooseCard(int Suit) { 
+  public DialogChooseCard(int Suit, Mainpage parent, int stack) { 
     // Dialog-Initialisierung
     super();
+    this.stack = stack;
+    this.parent = parent;
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     int frameWidth = 514; 
     int frameHeight = 876;
@@ -112,7 +118,7 @@ public class DialogChooseCard extends JDialog {
   
   // Anfang Methoden
   public void jButton1_ActionPerformed(ActionEvent evt) { //back
-    new DialogChooseSuit();
+    new DialogChooseSuit(parent,stack);
     this.dispose();
     
   } // end of jButton1_ActionPerformed
@@ -123,9 +129,13 @@ public class DialogChooseCard extends JDialog {
   } // end of jButton2_ActionPerformed
 
   public void jButton3_ActionPerformed(ActionEvent evt) { //save
-    // TODO hier Quelltext einf�gen
-    
+    parent.setCurrentString(currentCard,stack);
+    this.dispose();
   } // end of jButton3_ActionPerformed
+
+  public String returnCard(){
+    return currentCard;
+  }
 
   public void showCurrentCard(){
     
@@ -161,16 +171,18 @@ public class DialogChooseCard extends JDialog {
         case "King":
             item = "K";
             break;
-        case "Acs":
+        case "Ace":
             item = "A";
             break;
         default:
             break;      
       } 
+      
       String ausgabe = "Karten\\";
       ausgabe += item;
       ausgabe += suit;
       ausgabe += ".png";
+      currentCard = ausgabe;
       return ausgabe;
 
     }
