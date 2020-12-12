@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 //import javax.swing.event.*;
+import java.util.ArrayList;
 
 public class DialogChooseSuit extends JDialog {
   /**
@@ -9,6 +10,11 @@ public class DialogChooseSuit extends JDialog {
    */
   private static final long serialVersionUID = -268066263033937832L;
   // Anfang Attribute
+
+  private ArrayList<Card> YourCardStack = new ArrayList<>();
+  private ArrayList<Card> SharedCardStack = new ArrayList<>();
+  private ArrayList<Card> CardsOut = new ArrayList<>();
+
 
   private Mainpage parent;
   private int stack;
@@ -18,6 +24,7 @@ public class DialogChooseSuit extends JDialog {
   private JButton jButtonDiamonds = new JButton();
   private JButton jButtonClubs = new JButton();
   private JButton jButtonAbort = new JButton();
+  private JButton jButtonNoCard = new JButton();
   private JLabel jLabel1 = new JLabel();
 
   public DialogChooseSuit(Mainpage parent, int stack) {
@@ -85,6 +92,16 @@ public class DialogChooseSuit extends JDialog {
       }
     });
     cp.add(jButtonAbort);
+    jButtonNoCard.setBounds(150, 600, 75, 25);
+    jButtonNoCard.setText("No Card");
+    jButtonNoCard.setBackground(Color.ORANGE);
+    jButtonNoCard.setMargin(new Insets(2, 2, 2, 2));
+    jButtonNoCard.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        jButtonNoCard_ActionPerformed(evt);
+      }
+    });
+    cp.add(jButtonNoCard);
     jLabel1.setBounds(20, 20, 200, 20);
     jLabel1.setText("Please select a suit");
     cp.add(jLabel1);
@@ -114,6 +131,11 @@ public class DialogChooseSuit extends JDialog {
     dialog =  new DialogChooseCard(3,parent,stack);
     dispose();
 
+  } 
+
+  public void jButtonNoCard_ActionPerformed(ActionEvent evt) {
+    parent.setCurrentString("Karten\\New Card.png",stack);
+    dispose();
   } 
 
   public String returnCard(){
