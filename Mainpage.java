@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 //import javax.swing.event.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,13 +20,17 @@ public class Mainpage extends JFrame {
   // Anfang Attribute
   private ImageIcon cardPreview;
   private String currentString;
+  private Container cp = getContentPane();
+  
+  private ArrayList<Card> YourCardStack = new ArrayList<>();
+  private ArrayList<Card> SharedCardStack = new ArrayList<>();
+  private ArrayList<Card> CardsOut = new ArrayList<>();
+
+  private ArrayList<ArrayList<JButton>> ButtonList = new ArrayList<>();
  
   private JLabel jLabel1 = new JLabel();
   private JLabel jLabel2 = new JLabel();
   private JLabel jLabel3 = new JLabel();
-  private JButton jButtonNewLeft = new JButton();
-  private JButton jButtonNewMiddle = new JButton();
-  private JButton jButtonNewRight = new JButton();
  
   private JSeparator jSeparator0 = new JSeparator(SwingConstants.HORIZONTAL);
   private JSeparator jSeparatorTop = new JSeparator(SwingConstants.HORIZONTAL);
@@ -49,7 +54,6 @@ public class Mainpage extends JFrame {
     setLocation(x, y);
     setTitle("Mainpage");
     setResizable(false);
-    Container cp = getContentPane();
     cp.setLayout(null);
     // Anfang Komponenten
     
@@ -65,38 +69,11 @@ public class Mainpage extends JFrame {
     jLabel3.setText("Cards Out");
     jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
     cp.add(jLabel3);
-    jButtonNewLeft.setBounds(20, 227, 262, 400);
-    jButtonNewLeft.setIcon(cardPreview);
-    jButtonNewLeft.setBorderPainted( false );
-    jButtonNewLeft.setContentAreaFilled( false );
-    jButtonNewLeft.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
-        getCard(0);
-      }
-    });
-    cp.add(jButtonNewLeft);
+    setcard(0, 0);
 
-    jButtonNewMiddle.setBounds(d.width / 3 + 20, 227, 262, 400);
-    jButtonNewMiddle.setIcon(cardPreview);
-    jButtonNewMiddle.setBorderPainted( false );
-    jButtonNewMiddle.setContentAreaFilled( false );
-    jButtonNewMiddle.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
-        getCard(1);
-      }
-    });
-    cp.add(jButtonNewMiddle);
+    setcard(1, 0);
 
-    jButtonNewRight.setBounds(2 * d.width / 3 + 20, 227, 262, 400);
-    jButtonNewRight.setIcon(cardPreview);
-    jButtonNewRight.setBorderPainted( false );
-    jButtonNewRight.setContentAreaFilled( false );
-    jButtonNewRight.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt) {
-        getCard(2);
-      }
-    });
-    cp.add(jButtonNewRight);
+    setcard(2, 0);
     
     jSeparator0.setBounds(0, 200, d.width, 1);
     cp.add(jSeparator0);
@@ -125,19 +102,27 @@ public void getCard(int i){
   new DialogChooseSuit(this,i);
 }
 
+public void setcard(int stack, int position){
+  int line = position / 3;
+  int xpos = 60 + stack * 640 + (position % 3) * 180 ;
+  int ypos = 225 + line * 270;
+  JButton jButtonNew = new JButton();  
+  jButtonNew.setBounds(xpos, ypos, 160, 250);
+    jButtonNew.setIcon(cardPreview);
+    jButtonNew.setBorderPainted( false );
+    jButtonNew.setContentAreaFilled( false );
+    jButtonNew.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        getCard(0);
+      }
+    });
+    cp.add(jButtonNew);
+
+   // ButtonList.get(stack).add(jButtonNew);
+}
+
 public void setCurrentString(String s,int stack){
-  currentString = s;
-  switch(stack){
-    case 0:
-        jButtonNewLeft.setIcon(scale(currentString));
-        break;
-    case 1:
-        jButtonNewMiddle.setIcon(scale(currentString));
-        break;
-    case 2:
-        jButtonNewRight.setIcon(scale(currentString));
-        break;
-    } 
+  
 }
   
   // Ende Methoden

@@ -1,7 +1,7 @@
 public class Main{
     public static void main(String [ ] args)
 {
-     new Mainpage();
+     Mainpage m = new Mainpage();     
 }
 
 }

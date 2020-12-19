@@ -4,29 +4,55 @@ public class Card {
     private String pictureId;
 
     public Card(String pictureId){
-        int special10 = 1;
+        int special10 = 0;
+        char digit;
         this.pictureId = pictureId;
-        value = String.valueOf(pictureId.charAt(0));
-        if(value == "1" && pictureId.charAt(1) == '0'){
-            value = "10";
-            special10 = 2;
-        }
-        String qstore = String.valueOf(pictureId.charAt(special10));
+        digit = pictureId.charAt(7);
+                                                           
+        switch(digit){
+            case '1':
+                if(pictureId.charAt(8) != '0'){
+                    value = "1";
+                }
+                else{
+                    value = "10";
+                    special10 = 1;
+                }
+            break;
+            case 'A':
+                value = "Ace";
+            break;
+            case 'J':
+                value = "Lad";
+            break;
+            case 'K':
+                value = "King";
+            break;
+            case 'Q':
+                value = "Queen";
+            break;
+            default:
+                value = String.valueOf(digit);
+            break;
+         }
+        String qstore = String.valueOf(pictureId.charAt(special10 + 8));
         switch(qstore){
             case "C":
-                value = "Clubs";
+                    suit = "Clubs";
             break; 
             case "D":
-                 value = "Diamonds";
+                   suit = "Diamonds";
             break;
             case "H":
-                value = "Hearts";
+                  suit = "Hearts";
             break; 
             case "S":
-                 value = "Spades";
+                 suit = "Spades";
         }}
 
     public Card(String suit , String item){
+        this.suit = suit;
+        this.value = item;
       switch(suit){
         case "Spades":
             suit = "S";

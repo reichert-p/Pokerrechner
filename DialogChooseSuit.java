@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 //import javax.swing.event.*;
-import java.util.ArrayList;
+
 
 public class DialogChooseSuit extends JDialog {
   /**
@@ -11,9 +11,7 @@ public class DialogChooseSuit extends JDialog {
   private static final long serialVersionUID = -268066263033937832L;
   // Anfang Attribute
 
-  private ArrayList<Card> YourCardStack = new ArrayList<>();
-  private ArrayList<Card> SharedCardStack = new ArrayList<>();
-  private ArrayList<Card> CardsOut = new ArrayList<>();
+
 
 
   private Mainpage parent;
