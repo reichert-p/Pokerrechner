@@ -18,15 +18,14 @@ public class Mainpage extends JFrame {
    */
   private static final long serialVersionUID = -4531847550809231890L;
   // Anfang Attribute
-  private ImageIcon cardPreview;
-  private String currentString;
+  
   private Container cp = getContentPane();
   
   private ArrayList<Card> YourCardStack = new ArrayList<>();
   private ArrayList<Card> SharedCardStack = new ArrayList<>();
   private ArrayList<Card> CardsOut = new ArrayList<>();
 
-  private ArrayList<ArrayList<JButton>> ButtonList = new ArrayList<>();
+  private ArrayList<ArrayList<JButton>> buttonList = new ArrayList<>();
  
   private JLabel jLabel1 = new JLabel();
   private JLabel jLabel2 = new JLabel();
@@ -37,13 +36,12 @@ public class Mainpage extends JFrame {
   private JSeparator jSeparator1 = new JSeparator(SwingConstants.VERTICAL);
   private JSeparator jSeparator2= new JSeparator(SwingConstants.VERTICAL);
  
-  // Ende Attribute
   
   public Mainpage() { 
     // Frame-Initialisierung
     super();
 
-    cardPreview = this.scale("Karten\\New Card.png");
+    setUpButtonArray();
 
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                                                                   
@@ -69,12 +67,14 @@ public class Mainpage extends JFrame {
     jLabel3.setText("Cards Out");
     jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
     cp.add(jLabel3);
-    setcard(0, 0);
-
-    setcard(1, 0);
-
-    setcard(2, 0);
     
+    Card basic = new Card("Basic card variant");
+    YourCardStack.add(basic);
+    SharedCardStack.add(basic);
+      CardsOut.add(basic);
+    
+    displayAll();   
+
     jSeparator0.setBounds(0, 200, d.width, 1);
     cp.add(jSeparator0);
     jSeparatorTop.setBounds(0, 50, d.width, 1);
@@ -90,7 +90,6 @@ public class Mainpage extends JFrame {
     setVisible(true);
   } // end of public Mainpage
   
-  // Anfang Methoden
 public ImageIcon scale(String imageLink){
   ImageIcon i = new ImageIcon(imageLink);
   Image image = i.getImage(); // transform it 
@@ -102,13 +101,22 @@ public void getCard(int i){
   new DialogChooseSuit(this,i);
 }
 
-public void setcard(int stack, int position){
+public void setUpButtonArray(){
+  for(int i = 0; i < 3; i++){
+    ArrayList<JButton> subButtonList = new ArrayList<>();
+    buttonList.add(subButtonList);
+  }
+}
+
+public void setcard(int stack, int position, String url){
+  ImageIcon cardPreview = this.scale(url);
   int line = position / 3;
   int xpos = 60 + stack * 640 + (position % 3) * 180 ;
   int ypos = 225 + line * 270;
   JButton jButtonNew = new JButton();  
   jButtonNew.setBounds(xpos, ypos, 160, 250);
     jButtonNew.setIcon(cardPreview);
+    jButtonNew.setVisible(true);
     jButtonNew.setBorderPainted( false );
     jButtonNew.setContentAreaFilled( false );
     jButtonNew.addActionListener(new ActionListener() {
@@ -118,11 +126,97 @@ public void setcard(int stack, int position){
     });
     cp.add(jButtonNew);
 
-   // ButtonList.get(stack).add(jButtonNew);
+    
+    buttonList.get(stack).add(jButtonNew);
 }
 
 public void setCurrentString(String s,int stack){
+
+
+    Card newCard = new Card(s);
+    
+    switch(stack){
+    case 0:
+            YourCardStack.add(newCard);
+        break;
+    case 1:
+            SharedCardStack.add(newCard);
+        break;
+    case 2:
+            CardsOut.add(newCard);
+        break;
+    }
+    this.displayAll();
+}
+
+public void removeCard(int stack, int position){
+
+  switch(stack){
+    case 0:
+            YourCardStack.remove(position);
+        break;
+    case 1:
+            SharedCardStack.remove(position);
+        break;
+    case 2:
+            CardsOut.remove(position);
+        break;
+    }
+    this.displayAll();
+
+}
+
+public void displayAll(){ //take first column
+  for(int i = 0;i<3;i++){
+      this.displayCardStack(i);
+ }
+ System.out.println("Displayed");
+ setVisible(false);
+ setVisible(true);
+}
+
+public void displayCardStack(int stack){
+  ArrayList<Card> tousedstack;
   
+  int counter = 0;
+  switch(stack){
+    case 0:
+            tousedstack = YourCardStack;
+        break;
+    case 1:
+            tousedstack = SharedCardStack;
+        break;
+    case 2:
+            tousedstack = CardsOut;
+        break;
+    default:
+            tousedstack = YourCardStack;
+  }
+
+  int buttonAmount =  buttonList.get(stack).size();
+  int cardAmount = tousedstack.size();
+ 
+  if(buttonAmount == cardAmount){
+    for(int i = 0; i < cardAmount; i++){
+        ImageIcon icon = scale(tousedstack.get(i).getPictureId());
+        buttonList.get(stack).get(i).setIcon(icon);
+    }
+  }
+  else if(buttonAmount > cardAmount){
+    for(int i = 0; i < cardAmount; i++){
+      ImageIcon icon = scale(tousedstack.get(i).getPictureId());
+      buttonList.get(stack).get(i).setIcon(icon);
+    }
+    cp.remove(buttonList.get(stack).get(buttonAmount - 1));
+  }
+  else{
+    for(int i = 0; i < buttonAmount; i++){
+      ImageIcon icon = scale(tousedstack.get(i).getPictureId());
+      buttonList.get(stack).get(i).setIcon(icon);
+    }
+    setcard(stack , cardAmount - 1, tousedstack.get(cardAmount - 1).getPictureId());
+  }
+
 }
   
   // Ende Methoden

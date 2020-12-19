@@ -48,7 +48,12 @@ public class Card {
             break; 
             case "S":
                  suit = "Spades";
-        }}
+            break;
+            default:
+                this.pictureId = "Karten\\New Card.png";
+        }
+   
+    }
 
     public Card(String suit , String item){
         this.suit = suit;
