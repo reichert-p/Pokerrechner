@@ -12,6 +12,7 @@ public class DialogChooseCard extends JDialog {
   private Mainpage parent;
   private String currentCard;
   private int stack;
+  private int position;
 
   private String[] suits = {"Spades","Hearts","Diamonds","Clubs"};
   private String[] values = {"2","3","4","5","6","7","8","9","10","Lad","Queen","King","Ace"};
@@ -32,10 +33,11 @@ public class DialogChooseCard extends JDialog {
   private JButton jButton3 = new JButton();
   // Ende Attribute
   
-  public DialogChooseCard(int Suit, Mainpage parent, int stack) { 
+  public DialogChooseCard(int Suit, Mainpage parent, int stack, int position) { 
     // Dialog-Initialisierung
     super();
     this.stack = stack;
+    this.position = position;
     this.parent = parent;
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     int frameWidth = 514; 
@@ -118,7 +120,7 @@ public class DialogChooseCard extends JDialog {
   
   // Anfang Methoden
   public void jButton1_ActionPerformed(ActionEvent evt) { //back
-    new DialogChooseSuit(parent,stack);
+    new DialogChooseSuit(parent,stack,position);
     this.dispose();
     
   } // end of jButton1_ActionPerformed
@@ -129,7 +131,7 @@ public class DialogChooseCard extends JDialog {
   } // end of jButton2_ActionPerformed
 
   public void jButton3_ActionPerformed(ActionEvent evt) { //save
-    parent.setCurrentString(currentCard,stack);
+    parent.setCurrentString(currentCard,stack,position);
     this.dispose();
   } // end of jButton3_ActionPerformed
 
@@ -138,8 +140,6 @@ public class DialogChooseCard extends JDialog {
   }
 
   public void showCurrentCard(){
-    
-    
     ImageIcon cardPreviewe = new ImageIcon(this.getCard());
     jLabelImageBox.setIcon(cardPreviewe);
   }

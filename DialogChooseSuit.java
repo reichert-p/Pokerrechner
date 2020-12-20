@@ -16,6 +16,7 @@ public class DialogChooseSuit extends JDialog {
 
   private Mainpage parent;
   private int stack;
+  int position;
   private DialogChooseCard dialog;
   private JButton jButtonSpades = new JButton();
   private JButton jButtonHearts = new JButton();
@@ -25,10 +26,11 @@ public class DialogChooseSuit extends JDialog {
   private JButton jButtonNoCard = new JButton();
   private JLabel jLabel1 = new JLabel();
 
-  public DialogChooseSuit(Mainpage parent, int stack) {
+  public DialogChooseSuit(Mainpage parent, int stack, int position) {
     // Dialog-Initialisierung
     super();
     this.stack = stack;
+    this.position = position;
     this.parent = parent;
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     int frameWidth = 500;
@@ -111,28 +113,28 @@ public class DialogChooseSuit extends JDialog {
 
   // Anfang Methoden
   public void jButtonSpades_ActionPerformed(ActionEvent evt) {
-    dialog = new DialogChooseCard(0,parent,stack);
+    dialog = new DialogChooseCard(0,parent,stack,position);
     dispose();
   }
 
   public void jButtonHearts_ActionPerformed(ActionEvent evt) {
-    dialog = new DialogChooseCard(1,parent,stack);
+    dialog = new DialogChooseCard(1,parent,stack,position);
     dispose();
   } 
 
   public void jButtonDiamonds_ActionPerformed(ActionEvent evt) {
-    dialog = new DialogChooseCard(2,parent,stack);
+    dialog = new DialogChooseCard(2,parent,stack,position);
     dispose();
   } 
 
   public void jButtonClubs_ActionPerformed(ActionEvent evt) {
-    dialog =  new DialogChooseCard(3,parent,stack);
+    dialog =  new DialogChooseCard(3,parent,stack,position);
     dispose();
 
   } 
 
   public void jButtonNoCard_ActionPerformed(ActionEvent evt) {
-    parent.setCurrentString("Karten\\New Card.png",stack);
+    parent.removeCard(stack, position);
     dispose();
   } 
 
