@@ -30,6 +30,9 @@ public class Mainpage extends JFrame {
   private JLabel jLabel1 = new JLabel();
   private JLabel jLabel2 = new JLabel();
   private JLabel jLabel3 = new JLabel();
+  private JLabel jLabelErgebnis = new JLabel();
+
+  private JButton jButtonCalculate = new JButton();
  
   private JSeparator jSeparator0 = new JSeparator(SwingConstants.HORIZONTAL);
   private JSeparator jSeparatorTop = new JSeparator(SwingConstants.HORIZONTAL);
@@ -53,7 +56,17 @@ public class Mainpage extends JFrame {
     setTitle("Mainpage");
     setResizable(false);
     cp.setLayout(null);
-    // Anfang Komponenten
+
+
+    jButtonCalculate.setVisible(true);
+    jButtonCalculate.setText("Berechnen");
+    jButtonCalculate.setBounds(20, 15, 100, 20);
+    jButtonCalculate.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        jLabelErgebnis.setText("Gewinnwahrscheinlichkeit: " +  ((int)( Math.random() * 1000)) / 10 +   "%");
+      }
+    });
+    cp.add(jButtonCalculate);
     
     jLabel1.setBounds(d.width / 6 - 100 , 100, 200, 50);
     jLabel1.setText("Your Cards");
@@ -67,6 +80,9 @@ public class Mainpage extends JFrame {
     jLabel3.setText("Cards Out");
     jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
     cp.add(jLabel3);
+    jLabelErgebnis.setBounds(180, 20, 300, 20);
+    jLabelErgebnis.setText("Gewinnwahrscheinlichkeit:    %");
+    cp.add(jLabelErgebnis);
     
     Card basic = new Card("Basic card variant");
     YourCardStack.add(basic);
